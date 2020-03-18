@@ -6,5 +6,7 @@ package com.test;
  * @Created by Veigar
  */
 public class test {
-    
+    public static void main(String[] args) {
+        System.out.println("Hello world");
+    }
 }
