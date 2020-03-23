@@ -33,6 +33,7 @@ public class linkedList<E> extends abstractList<E>{
     }
 
     public void add(int index, E element) {
+        rangeCheckForAdd(index);
         if(index == 0){
             first = new Node<E>(element, first);
         }else {
@@ -45,6 +46,7 @@ public class linkedList<E> extends abstractList<E>{
     }
 
     public E remove(int index) {
+        rangeCheck(index);
         Node<E> node = first;
         if(index == 0){
             first = first.next;
