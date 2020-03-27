@@ -92,6 +92,22 @@ public class arrayList<T> extends abstractList<T>{
         System.out.println("扩容至:"+ newCapacity);
     }
 
+    //ArrayList缩容操作
+//    private void subtractCapacity(){
+//        int capacity = elements.length;
+//        int newCapacity = capacity >> 1;
+//        if(size >= capacity||(capacity <= DEFAULT_CAPACITY))
+//        {
+//            return;
+//        }
+//        T[] newElements = (T[]) new Object[newCapacity];
+//        for(int i=0;i<size;i++){
+//            newElements[i] = elements[i]; //将elements指向新创建得newElements
+//        }
+//        elements = newElements;
+//        System.out.println("缩容至:"+ newCapacity);
+//    }
+
     @Override
     public String toString() {
         return "arrayList{" +
