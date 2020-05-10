@@ -8,5 +8,15 @@ public class Main {
         while(!queue.isEmpty()){
             System.out.println(queue.deQueue());
         }
+
+        CircleQueue<Integer> c = new CircleQueue<>();
+        for (int i = 0; i < 10; i++) {
+            c.enQueue(i);
+        } 
+        System.out.println(c);
+        for (int i = 0; i < 3; i++) {
+            c.deQueue();
+        }
+        System.out.println(c);
     }
 }

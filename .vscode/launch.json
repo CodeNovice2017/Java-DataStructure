@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-code00<Complexity_00>",
+            "request": "launch",
+            "mainClass": "code00",
+            "projectName": "Complexity_00"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Main<LeetCode>",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "LeetCode"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Main<Linked_List00>",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Linked_List00"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Main<Queue>",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Queue"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-Main<Stack_00>",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Stack_00"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-array_test<linear_list00>",
+            "request": "launch",
+            "mainClass": "array_test",
+            "projectName": "linear_list00"
+        }
+    ]
+}
