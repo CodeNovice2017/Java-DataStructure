@@ -8,62 +8,22 @@
             "type": "java",
             "name": "CodeLens (Launch) - App",
             "request": "launch",
-            "mainClass": "org.codenovice.App"
+            "mainClass": "org.codenovice.App",
+            "projectName": "treeDemo"
         },
         {
             "type": "java",
-            "name": "CodeLens (Launch) - App",
+            "name": "Debug (Launch) - External Terminal",
             "request": "launch",
-            "mainClass": "org.example.App",
-            "projectName": "Tree"
+            "console": "externalTerminal",
+            "mainClass": ""
         },
         {
             "type": "java",
-            "name": "Debug (Launch) - Current File",
+            "name": "Debug (Launch) - integratedTerminal Terminal",
             "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-code00<Complexity_00>",
-            "request": "launch",
-            "mainClass": "code00",
-            "projectName": "Complexity_00"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Main<LeetCode>",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": "LeetCode"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Main<Linked_List00>",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": "Linked_List00"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Main<Queue>",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": "Queue"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Main<Stack_00>",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": "Stack_00"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-array_test<linear_list00>",
-            "request": "launch",
-            "mainClass": "array_test",
-            "projectName": "linear_list00"
+            "console": "integratedTerminal",
+            "mainClass": ""
         }
     ]
 }

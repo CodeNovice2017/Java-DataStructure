@@ -1,6 +1,14 @@
 package org.codenovice;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
+
+import javax.annotation.processing.RoundEnvironment;
+import javax.sound.sampled.SourceDataLine;
 
 import org.codenovice.printer.BinaryTreeInfo;
 
@@ -26,7 +34,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo{
     }
 
     //内部静态类
-    private static class Node<E>{
+    public static class Node<E>{
         E element;
         Node<E> leftNode;
         Node<E> rightNode;
@@ -46,6 +54,11 @@ public class BinarySearchTree<E> implements BinaryTreeInfo{
     public void clear(){
         return;
     }
+
+    public Node<E> getRNode(){
+        return rNode;
+    }
+
     public void add(E element){
         //element不能为空
         elementNotNullCheck(element);
@@ -143,63 +156,188 @@ public class BinarySearchTree<E> implements BinaryTreeInfo{
     private void preorderTraversalNonRecursive(Node<E> node){
         Stack<Node> stack = new Stack<>();
         
-        Node<E> tempNode = rNode;
-        stack.push(tempNode);
-        while(!stack.empty()){
-            Node<E> temp = stack.pop();
-            if (temp != null) {
-                System.out.println(temp.element);
-            } else {
-                break;
+        // Node<E> tempNode = rNode;
+        // stack.push(tempNode);
+        // while(!stack.empty()){
+        //     Node<E> temp = stack.pop();
+        //     if (temp != null) {
+        //         System.out.println(temp.element);
+        //     } else {
+        //         break;
+        //     }
+        //     if(temp.rightNode != null){
+        //         stack.push(temp.rightNode);
+        //     }
+        //     if(temp.leftNode != null){
+        //         stack.push(temp.leftNode);
+        //     }
+        // }
+        while(!stack.isEmpty()||node!=null){
+
+            if(node != null){
+
+                // 进栈之前就已经访问,上面的方法是出栈的时候访问
+                System.out.println(node.element);
+
+                stack.push(node);
+
+                node = node.leftNode;
+
+            } else{
+
+                // 代表左路径已经走到最后的
+                node = stack.pop();
+                
+                node = node.rightNode;
+
             }
-            if(temp.rightNode != null){
-                stack.push(temp.rightNode);
-            }
-            if(temp.leftNode != null){
-                stack.push(temp.leftNode);
-            }
+
+
         }
+
     }
     //中序遍历
     //递归方式
     public void inorderTraversal(){
+        inorderTraversal(rNode);
+    }
 
+    // 先访问左子树,根节点,右节点
+    private void inorderTraversal(Node<E> node){
+        if(node == null){
+            return;
+        }
+        inorderTraversal(node.leftNode);
+        System.out.println(node.element);
+        inorderTraversal(node.rightNode);
     }
     public void inorderTraversalNonRecursive(){
         inorderTraversalNonRecursive(rNode);
     }
     private void inorderTraversalNonRecursive(Node<E> node){
-        Stack<Node> stack = new Stack<>();
         
-        Node<E> tempNode = node;
-        Node<E> historyNode = null;
-        if(tempNode.rightNode!=null){
-            stack.push(tempNode. rightNode);
-        }
-        stack.push(tempNode);
-        if(tempNode.leftNode!=null){
-            stack.push(tempNode.leftNode);
-        }
-        while(!stack.empty()){
-            tempNode = stack.pop();
-            if(tempNode.leftNode == null||tempNode.leftNode == historyNode){
-                System.out.println(tempNode.element);
-                historyNode = tempNode;
-                if (tempNode.rightNode != null) {
-                    stack.push(tempNode.rightNode);
-                }
+        Stack<Node> stack = new Stack<>();
+        Node<E> temp = null;
+        
+        while(!stack.isEmpty()||node!=null){
+            
+            // 访问时间不同于前序遍历的第二种写法
+            if(node!=null){
+                stack.push(node);
+                node = node.leftNode;
             }else{
-                if (tempNode.rightNode != null) {
-                    stack.push(tempNode.rightNode);
-                }
-                stack.push(tempNode);
-                if (tempNode.leftNode != null) {
-                    stack.push(tempNode.leftNode);
-                }
+                // 出栈就代表当前树的根节点的左子树已经遍历结束,该访问我自己了
+                node = stack.pop();
+                System.out.println(node.element);
+                node = node.rightNode;
+                
             }
+
         }
+
     }
 
+
+    public void getInorderTraversalList(Node<E> node,List<Node<E>> list) {
+        if (node == null) {
+            return;
+        }
+        getInorderTraversalList(node.leftNode,list);
+        list.add(node);
+        getInorderTraversalList(node.rightNode,list);
+    }
+
+    // 后序遍历
+    // 递归方式
+    public void postorderTraversal() {
+        postorderTraversalNonRecursive(rNode);
+    }
+
+    private void postorderTraversal(Node<E> node) {
+        if (node == null) {
+            return;
+        }
+        inorderTraversal(node.leftNode);
+        inorderTraversal(node.rightNode);
+        System.out.println(node.element);
+    }
+
+    private void postorderTraversalNonRecursive(Node<E> node){
+
+        Stack<Node<E>> stack = new Stack<>();
+        Map<E,Integer> map = new HashMap<>();
+        Node<E> temp = null;
+
+        while (!stack.isEmpty() || node != null) {
+
+            // 访问时间不同于前序遍历的第二种写法
+            if (node != null) {
+                stack.push(node);
+                map.put(node.element, 1);
+                node = node.leftNode;
+            } else {
+                node = stack.peek();
+                if(map.get(node.element) == 2){
+                    stack.pop();
+                    System.out.println(node.element);
+                    node = null;
+                }else{
+                    map.put(node.element,2);
+                    node = node.rightNode;
+                }
+                
+            }
+
+        }
+
+    }
+
+    public void levelOrderTraversal(){
+
+        levelOrderTraversal(rNode);
+
+    }
+    private void levelOrderTraversal(Node<E> node){
+        
+        Queue<Node<E>> queue = new LinkedList<>();
+        if(node == null){
+            return;
+        }
+        queue.offer(node);
+        while(!queue.isEmpty()){
+            node = queue.poll();
+            System.out.println(node.element);
+            if(node.leftNode != null){
+                queue.offer(node.leftNode);
+            }
+            if (node.rightNode != null) {
+                queue.offer(node.rightNode);
+            }
+        }
+
+    }
+
+    public Node<E> predecessor(Node<E> node){
+        if(node == null){
+            return null;
+        }
+        if(node.leftNode!=null){
+            return maxNode(node.leftNode);
+        }else{
+            while(node.parNode!=null && node.parNode.leftNode==node){
+                node = node.parNode;
+            }
+            return node.parNode;
+        }
+
+    }
+    private Node<E> maxNode(Node<E> node){
+        while(node.rightNode != null){
+            node = node.rightNode;
+        }
+        return node;
+    }
+    
     //----------封装额外方法区-----------
     //非空检查封装
     private void elementNotNullCheck(E element){

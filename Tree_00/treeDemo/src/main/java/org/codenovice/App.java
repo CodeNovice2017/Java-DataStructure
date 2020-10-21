@@ -1,7 +1,9 @@
 package org.codenovice;
 
-import javax.sound.sampled.SourceDataLine;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.codenovice.BinarySearchTree.Node;
 import org.codenovice.printer.BinaryTrees;
 
 /**
@@ -65,44 +67,45 @@ public final class App {
         System.out.println("==========================");
         bst.preorderTraversalNonRecursive();
         System.out.println("==========================");
+        // bst.inorderTraversalNonRecursive();
+        
+        System.out.println("==========================");
         bst.inorderTraversalNonRecursive();
+        System.out.println("==========================");
+
+        System.out.println("==========================");
+        bst.postorderTraversal();
+        System.out.println("==========================");
+
+        System.out.println("==========================");
+        bst.levelOrderTraversal();
+        System.out.println("==========================");
     }
 
-    static boolean testLeetCode(int N){
-        int tempN = N;
-        int flag = 2;
-        while(true){
-            int[] arrayInt = new int[tempN];
-            int x;
-            int y = 0;
-            for(int i = 1;i<tempN;i++){
-                if(tempN%i==0){
-                    arrayInt[y++] = i; 
-                }
-            }
-            if(y == 0){
-                if(flag%2 == 0){
-                    return false;
-                }else{
-                    return true;
-                }
-            }else{
-                x = arrayInt[(int)(Math.random()*y)];
-                tempN = tempN - x;
-                flag += 1;
-            }
+    static void testPredecessor(){
+
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        for (int i = 0; i < 30; i++) {
+            // random方法一定要*100整个加括号然后转换为int,否则相当于random先转int,random本身是0-1,取不到1的小数,那么自然转为int后就一直是0,*100依然还是0
+            bst.add((int) (Math.random() * 100));
         }
+        bst.inorderTraversalNonRecursive();
+        List<Node<Integer>> list = new ArrayList<>();
+        bst.getInorderTraversalList(bst.getRNode(), list);
+        System.out.println(bst.predecessor(list.get(5)).element);
     }
 
     public static void main(String[] args) {
 
         System.out.println("Hello World!");
 
-        testInteger();
+        // testInteger();
 
-        testPerson();
+        // testPerson();
 
-        testRandomInteger();
+        // testRandomInteger();
 
+        testPredecessor();
     }
+        
 }
