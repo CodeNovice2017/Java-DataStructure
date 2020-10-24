@@ -194,4 +194,46 @@ public class AVLTree<E> extends BST<E> {
     updateHeight(parent);
   }
 
+  /**
+   * 恢复平衡
+   * 
+   * @param grand 高度最低的那个不平衡节点
+   */
+  @SuppressWarnings("unused")
+  private void rebalance2(Node<E> grand) {
+    Node<E> parent = ((AVLNode<E>) grand).tallerChild();
+    Node<E> node = ((AVLNode<E>) parent).tallerChild();
+    if (parent.isLeftChild()) { // L
+      if (node.isLeftChild()) { // LL
+        rotateRight(grand);
+      } else { // LR
+        rotateLeft(parent);
+        rotateRight(grand);
+      }
+    } else { // R
+      if (node.isLeftChild()) { // RL
+        rotateRight(parent);
+        rotateLeft(grand);
+      } else { // RR
+        rotateLeft(grand);
+      }
+    }
+  }
+
+  // 失衡调整其实和afterAdd是一样的,只不过afterAdd添加节点的失衡调整只需要更改一次即可
+  // 因为就是只需要向上层找到第一个失衡的节点调整平衡即可,但是remove引起的失衡要一直向上调整,判断所有的祖父节点
+  // 所以只比afterAdd少一个break
+  @Override
+  protected void afterRemove(Node<E> node) {
+    while ((node = node.parent) != null) {
+      if (isBalanced(node)) {
+        // 更新高度
+        updateHeight(node);
+      } else {
+        // 恢复平衡
+        rebalance(node);
+      }
+    }
+  }
+
 }

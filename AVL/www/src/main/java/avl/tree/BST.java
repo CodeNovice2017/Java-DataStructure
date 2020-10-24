@@ -67,16 +67,22 @@ public class BST<E> extends BinaryTree<E> {
 	public void remove(E element) {
 		remove(node(element));
 	}
+	protected void afterRemove(Node<E> node){};
 
 	public boolean contains(E element) {
 		return node(element) != null;
 	}
 	
 	private void remove(Node<E> node) {
-		if (node == null) return;
-		
+		if (node == null)
+			return;
+
 		size--;
-		
+		// afterRemove(node)放在这里肯定是不对的,因为我们删除后调整的条件是,有一个节点真的被删除掉了
+		// 但是现在这个位置afterRemove传入的node并不一定是真正被删除的节点,就是比如是度为2的节点并没有真正被删除
+		// 真正被删除的是度为2的节点的前驱或者后继节点,度为2的节点只是element换为了前驱或者后继节点的element,具体可以看remove的实现笔记
+		// afterRemove(node)
+
 		if (node.hasTwoChildren()) { // 度为2的节点
 			// 找到后继节点
 			Node<E> s = successor(node);
@@ -85,10 +91,10 @@ public class BST<E> extends BinaryTree<E> {
 			// 删除后继节点
 			node = s;
 		}
-		
+
 		// 删除node节点（node的度必然是1或者0）
 		Node<E> replacement = node.left != null ? node.left : node.right;
-		
+
 		if (replacement != null) { // node是度为1的节点
 			// 更改parent
 			replacement.parent = node.parent;
@@ -100,14 +106,26 @@ public class BST<E> extends BinaryTree<E> {
 			} else { // node == node.parent.right
 				node.parent.right = replacement;
 			}
+
+			// 等到节点真的被删除后,并且其left,right,parent等都处理好了之后,就是完全删除维护逻辑完成后再进行失衡调整
+			// 删除节点之后的处理
+			afterRemove(node);
 		} else if (node.parent == null) { // node是叶子节点并且是根节点
 			root = null;
+
+			// 删除节点之后的处理
+			afterRemove(node);
 		} else { // node是叶子节点，但不是根节点
 			if (node == node.parent.left) {
 				node.parent.left = null;
 			} else { // node == node.parent.right
 				node.parent.right = null;
 			}
+
+			// AVL树其实上面的两行afterRemove其实可以不用写,都统一在最后这里处理即可,但是如果想让这个BST二叉搜索树兼容后面的红黑树的话
+			// 最好是这三个位置都写上,因为将来可能会传更多的参数
+			// 删除节点之后的处理
+			afterRemove(node);
 		}
 	}
 	

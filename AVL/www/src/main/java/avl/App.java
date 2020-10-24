@@ -18,6 +18,11 @@ public class App
         }
 
         BinaryTrees.println(avl);
+
+        avl.remove(8);
+
+        BinaryTrees.println(avl);
+
     }
     public static void main(String[] args) {
         test1();

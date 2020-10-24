@@ -1,9 +1,6 @@
-# 数据结构与算法学习笔记
+[TOC]
 
-- **Stay hungry,Stay foolish**
-
-# 恋上数据结构与算法
-
+# 恋上数据结构与算法-腾讯课堂(JAVA实现)
 ## 复杂度
 #### 均摊复杂度(结合ArrayList理解)
 - ArrayList的add(E element)只在尾部添加,最好O(1),最坏O(n)(发生扩容的情况),这种情况适合用均摊复杂度分析,就是绝大部分情况都是O(1),而突然会有复杂度变高的情况,将扩容发生的情况,均摊到每一次未扩容的add操作中,这样每一次就还是相当于O(1),**均摊复杂度一般就是最好复杂度,适合连续出现了复杂度很低的情况,突然出现了复杂度较高的情况**
@@ -572,7 +569,9 @@ public class Stack<E>{
 
 #### 二叉搜索树.32 删除度为2的节点
 
-- 如果一个节点的度为2,那么它的前驱,后继节点的度只可能是1或0
+- **如果一个节点的度为2,那么它的前驱,后继节点的度只可能是1或0**
+- 就相当于找到被删除度为2的节点的前驱或者后继节点取代他,然后删除原本的这个前驱或者后继节点
+- 在代码中就是把被删除节点的element值改为后继节点的值即可,然后按照删除度为1或0的节点的方式删除这个后继节点
 
 #### 二叉搜索树 33 删除实现
 
@@ -757,3 +756,326 @@ public void clear() {
   - **AVL树的每个节点的平衡因子只可能是1,0,-1(绝对值<=1,如果超过1,称为失衡)**
   - 每个节点的左右子树高度差不超过1
   - 搜索,添加,删除的时复是O(log(n))
+
+##### 添加导致失衡
+
+- 添加某个节点,导致失衡,有可能导致所有的祖先节点都失衡,也可能导致部分祖先节点失衡
+- **父节点和其他非祖先节点,都不可能失衡**,只有父节点的父节点或者再往上(祖先节点)才可能失衡
+
+###### 失衡调整
+- **按旋转原理的调整方式**
+1. **LL-右旋转(单旋)**
+   - 假设三级节点分别是n(node),p(parent),g(grand)
+   - ![](https://raw.githubusercontent.com/CodeNovice2017/ImageRepository/master/img/20201022184243.png)
+   1. Left-Left失衡,失衡节点是因为它左子树的左子树导致了它的失衡,这种情况称为LL
+   2. 首先让失衡节点.left = 失衡节点的左子节点.right(相当于断开了失衡节点的左子树),即`g.left = p.right`
+   3. 然后让失衡节点的左子节点的右子节点指向失衡节点(相当于断开了左子节点的右子树),即p.right = g
+   4. 让p成为这颗子树(原本失衡节点是这颗子树的根节点)的根节点
+   - ![](https://raw.githubusercontent.com/CodeNovice2017/ImageRepository/master/img/20201022184809.png)
+   5. 因为添加之前t0,t1,t2都是平衡的,那么无论怎么旋转t0,t1,t2子树依然是平衡的
+   6. 添加可能会导致失衡的都是祖先节点,也就是图中的n,p,g三个节点
+   7. **这次右旋转是否会导致g当初的祖父节点,也就是现在p的祖父节点失衡呢?**,答案是不会,因为添加一个节点可以看到高度加了1,但是旋转之后,高度又回到之前平衡时的高度,所以旋转之后整颗子树的高度是没有变化的
+   8. 交换之后,记得维护节点之间的关系,也就是`g.left = p.right`之后还需要让p.right.parent = g,即`t2.parent = g`, 然后还需要,`p.parent = g.parent`,`g.parent = p`
+   9. 还需要更新一下g,p节点的高度,以后avl树应该新增一个高度属性,方便计算平衡因子
+2. **RR-左旋转(单旋)**
+   1. g.right = p.left
+   2. p.left = g
+   3. p成为这颗子树的根节点
+   4. 维护内容:T1,p,g的parent属性,后更新g,p的高度
+3. **LR-先RR左旋转,然后LL右旋转**
+    - ![](https://raw.githubusercontent.com/CodeNovice2017/ImageRepository/master/img/20201022195953.png)
+    1. 先对失衡节点的左子树做RR左旋转,然后对原失衡节点的左子树的右子树的节点进行LL右旋转,**即先对p进行RR左旋转,然后对n进行LL右旋转**
+    2. 因为先做RR左旋转之后就转换为了LL失衡的情况
+    - ![](https://raw.githubusercontent.com/CodeNovice2017/ImageRepository/master/img/20201022200009.png)
+    - ![](https://raw.githubusercontent.com/CodeNovice2017/ImageRepository/master/img/20201022200203.png)
+4. **RL-先LL右旋转,然后RR左旋转**
+
+- **调整代码实现**
+```java
+  private void rebalance(Node<E> grand) {
+    Node<E> parent = ((AVLNode<E>) grand).tallerChild();
+    Node<E> node = ((AVLNode<E>) parent).tallerChild();
+    if (parent.isLeftChild()) { // L
+      if (node.isLeftChild()) { // LL
+        rotateRight(grand);
+      } else { // LR
+        rotateLeft(parent);
+        rotateRight(grand);
+      }
+    } else { // R
+      if (node.isLeftChild()) { // RL
+        rotateRight(parent);
+        rotateLeft(grand);
+      } else { // RR
+        rotateLeft(grand);
+      }
+    }
+  }
+```
+```java
+    // RR-左旋调整
+  private void rotateLeft(Node<E> grand) {
+    Node<E> parent = grand.right;
+    Node<E> child = parent.left;
+    grand.right = child;
+    parent.left = grand;
+    afterRotate(grand, parent, child);
+  }
+
+  private void rotateRight(Node<E> grand) {
+    Node<E> parent = grand.left;
+    Node<E> child = parent.right;
+    grand.left = child;
+    parent.right = grand;
+    afterRotate(grand, parent, child);
+  }
+    // LL-右旋调整
+  private void afterRotate(Node<E> grand, Node<E> parent, Node<E> child) {
+    // 让parent称为子树的根节点
+    parent.parent = grand.parent;
+    if (grand.isLeftChild()) {
+      grand.parent.left = parent;
+    } else if (grand.isRightChild()) {
+      grand.parent.right = parent;
+    } else { // grand是root节点
+      root = parent;
+    }
+
+    // 更新child的parent
+    if (child != null) {
+      child.parent = grand;
+    }
+
+    // 更新grand的parent
+    grand.parent = parent;
+
+    // 更新高度
+    updateHeight(grand);
+    updateHeight(parent);
+  }
+```
+
+###### 失衡调整的规律
+![](https://raw.githubusercontent.com/CodeNovice2017/ImageRepository/master/img/20201023200848.png)
+
+- **找规律调整方法**
+- 可以从上图看出,实际上失衡调整是有规律的,就是无论是LL,RR,LR,RL可以看出一系列规律
+  - 未调整前,从左到右,abcdefg由大到小,调整之后依然是从左到右abcdefg由大到小
+  - 最终恢复平衡之后的结构都是一模一样的
+    - d永远都会成为失衡子树调整之后的根节点
+    - abc独立为一颗子树,bdf独立为一颗子树,efg独立为一颗子树
+- 所以我可以将所有的调整逻辑统一,只要找出对应的abcdefg节点,然后统一的按照最后的结构进行连接即可,而无需管到底是哪一种情况的旋转,还有旋转之后的维护
+- **所以上面的失衡调整的代码可以有统一的实现方式rotate()方法**
+```java
+	/**
+	 * 恢复平衡
+	 * @param grand 高度最低的那个不平衡节点
+	 */
+	private void rebalance(Node<E> grand) {
+		Node<E> parent = ((AVLNode<E>)grand).tallerChild();
+		Node<E> node = ((AVLNode<E>)parent).tallerChild();
+		if (parent.isLeftChild()) { // L
+			if (node.isLeftChild()) { // LL
+				rotate(grand, node, node.right, parent, parent.right, grand);
+			} else { // LR
+				rotate(grand, parent, node.left, node, node.right, grand);
+			}
+		} else { // R
+			if (node.isLeftChild()) { // RL
+				rotate(grand, grand, node.left, node, node.right, parent);
+			} else { // RR
+				rotate(grand, grand, parent.left, parent, node.left, node);
+			}
+		}
+	}
+```
+- 未简化重构之前的rotate(),共传入7个参数,abcdefg各自情况时所代表的节点要从上面笔记来看,r传入是因为我们需要确定传入的哪一个节点是未调整之前这颗子树的根节点
+```java
+private void rotate(
+			Node<E> r, // 子树的根节点
+			Node<E> a, Node<E> b, Node<E> c,
+			Node<E> d,
+			Node<E> e, Node<E> f, Node<E> g) {
+		// 让d成为这棵子树的根节点
+		d.parent = r.parent;
+		if (r.isLeftChild()) {
+			r.parent.left = d;
+		} else if (r.isRightChild()) {
+			r.parent.right = d;
+		} else {
+			root = d;
+		}
+		
+		// a-b-c
+		b.left = a;
+		if (a != null) {
+			a.parent = b;
+		}
+		b.right = c;
+		if (c != null) {
+			c.parent = b;
+		}
+		updateHeight(b);
+		
+		// e-f-g
+		f.left = e;
+		if (e != null) {
+			e.parent = f;
+		}
+		f.right = g;
+		if (g != null) {
+			g.parent = f;
+		}
+		updateHeight(f);
+		
+		// b-d-f
+		d.left = b;
+		d.right = f;
+		b.parent = d;
+		f.parent = d;
+		updateHeight(d);
+	}
+	
+```
+- 但是还可以继续优化一下,因为a,g两个节点其实可以不处理,因为a,g两个节点在调整之前和调整之后所有连接都没有发生变化,也就是说调整可能影响的节点只有bcdef五个节点
+```java
+	private void rotate(
+			Node<E> r, // 子树的根节点
+			Node<E> b, Node<E> c,
+			Node<E> d,
+			Node<E> e, Node<E> f) {
+		// 让d成为这棵子树的根节点
+		d.parent = r.parent;
+		if (r.isLeftChild()) {
+			r.parent.left = d;
+		} else if (r.isRightChild()) {
+			r.parent.right = d;
+		} else {
+			root = d;
+		}
+		
+		//b-c
+		b.right = c;
+		if (c != null) {
+			c.parent = b;
+		}
+		updateHeight(b);
+		
+		// e-f
+		f.left = e;
+		if (e != null) {
+			e.parent = f;
+		}
+		updateHeight(f);
+		
+		// b-d-f
+		d.left = b;
+		d.right = f;
+		b.parent = d;
+		f.parent = d;
+		updateHeight(d);
+	}
+```
+##### 删除导致的失衡
+- (**结论**)删除只可能导致**父节点(未改变父节点高度)或祖先节点(特殊情况刚好删除节点导致父节点的高度变化,比如父节点只有一个叶子节点的情况,虽然删除该节点未导致父节点失衡,但是父节点高度由1变0可能会导致祖先节点的失衡)**的失衡,其他所有节点都不可能失衡,(**因为未改变父节点高度的情况下其他因子的平衡因子的计算和该节点无关,比如该节点的父节点的父节点(祖先节点),这个祖先节点的平衡因子依然是左子树高度减右子树高度,该节点被删除导致失衡肯定是因为其父节点的高度差变为2了,比如左子树高2,那么删除前左子树比右子树高1,这颗子树的高度依然是其左子树的高度,其祖先节点的平衡因子并不会改变**)
+- (**结论**)只要删除的节点会导致父节点的失衡,那么证明被删除的节点一定是比较短的那个子树,所以其父节点的高度并不会改变,(**注意这个删除节点,父节点高度不会改变的结论只是对父节点失衡的条件成立的,如果本身删除节点并没有导致父节点失衡,那么父节点高度可能会改变,但是改变之后父节点依然是平衡的,并没有因为删除节点而失衡,但是此时祖先节点可能失衡**)
+
+###### 删除后的平衡方案
+- LL-右旋转情况
+- ![](https://raw.githubusercontent.com/CodeNovice2017/ImageRepository/master/img/20201024101217.png)
+  - **LL情况是通过反向理解成添加来理解的,从上图来看删除的节点是T3的尾部,导致的结果是g的失衡,g的失衡既可以从右节点的删除来理解,又可以从T0添加了一个节点导致失衡来理解,而T0添加的情况就是LL**
+  - 而祖先节点是否会失衡,并不是说删除节点之后判断祖先节点是否失衡,上面结论说了删除节点只会导致父节点的失衡,但是删除调整失衡之后,这颗子树的高度就有可能变化了,那么其祖先节点也有可能失衡,极端情况下,可能要进行O(log(n))的调整
+- **开发流程**
+  - 先在BST中类似afterAdd,声明afterRemove方法,并放入remove方法中
+  - **关键在于afterRemove()放的位置是一个需要理解的难点**
+  - ```java
+    protected void afterRemove(Node<E> node){};
+
+  	private void remove(Node<E> node) {
+		if (node == null)
+			return;
+
+		size--;
+		// afterRemove(node)放在这里肯定是不对的,因为我们删除后调整的条件是,有一个节点真的被删除掉了
+		// 但是现在这个位置afterRemove传入的node并不一定是真正被删除的节点,就是比如是度为2的节点并没有真正被删除
+		// 真正被删除的是度为2的节点的前驱或者后继节点,度为2的节点只是element换为了前驱或者后继节点的element,具体可以看remove的实现笔记
+		// afterRemove(node)
+
+		if (node.hasTwoChildren()) { // 度为2的节点
+			// 找到后继节点
+			Node<E> s = successor(node);
+			// 用后继节点的值覆盖度为2的节点的值
+			node.element = s.element;
+			// 删除后继节点
+			node = s;
+		}
+
+		// 删除node节点（node的度必然是1或者0）
+		Node<E> replacement = node.left != null ? node.left : node.right;
+
+		if (replacement != null) { // node是度为1的节点
+			// 更改parent
+			replacement.parent = node.parent;
+			// 更改parent的left、right的指向
+			if (node.parent == null) { // node是度为1的节点并且是根节点
+				root = replacement;
+			} else if (node == node.parent.left) {
+				node.parent.left = replacement;
+			} else { // node == node.parent.right
+				node.parent.right = replacement;
+			}
+
+			// 等到节点真的被删除后,并且其left,right,parent等都处理好了之后,就是完全删除维护逻辑完成后再进行失衡调整
+			// 删除节点之后的处理
+			afterRemove(node);
+		} else if (node.parent == null) { // node是叶子节点并且是根节点
+			root = null;
+
+			// 删除节点之后的处理
+			afterRemove(node);
+		} else { // node是叶子节点，但不是根节点
+			if (node == node.parent.left) {
+				node.parent.left = null;
+			} else { // node == node.parent.right
+				node.parent.right = null;
+			}
+
+			// AVL树其实上面的两行afterRemove其实可以不用写,都统一在最后这里处理即可,但是如果想让这个BST二叉搜索树兼容后面的红黑树的话
+			// 最好是这三个位置都写上,因为将来可能会传更多的参数
+			// 删除节点之后的处理
+			afterRemove(node);
+		}
+	}
+	
+    ```
+  - **需要理解为什么afterRemove和afterAdd逻辑一样,但是少一个break**
+  - ```java
+        // 失衡调整其实和afterAdd是一样的,只不过afterAdd添加节点的失衡调整只需要更改一次即可
+        // 因为就是只需要向上层找到第一个失衡的节点调整平衡即可,但是remove引起的失衡要一直向上调整,判断所有的祖父节点
+        // 所以只比afterAdd少一个break
+        @Override
+        protected void afterRemove(Node<E> node) {
+            while ((node = node.parent) != null) {
+            if (isBalanced(node)) {
+                // 更新高度
+                updateHeight(node);
+            } else {
+                // 恢复平衡
+                rebalance(node);
+            }
+            }
+        }
+    ```
+##### 总结
+- **添加**
+  - 可能会导致所有祖先节点失衡
+  - 只要让高度最低的失衡节点恢复平衡,整棵树就恢复平衡(O(1)次调整)
+- **删除**
+  - 只可能导致父节点失衡或祖先节点失衡,其他节点都不可能失衡
+  - 让父节点恢复平衡之后,可能会导致更高层的祖先节点的失衡,最多需要O(log(n))
+- 平均时间复杂度
+  - 搜索O(log(n))
+  - 添加O(log(n)),O(1)次调整
+  - 删除O(log(n)),调整最多需要O(log(n))
+
+#### B树
