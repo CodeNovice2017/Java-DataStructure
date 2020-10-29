@@ -1,4 +1,4 @@
-package org.codenovice;
+package RBTree;
 
 import org.junit.jupiter.api.Test;
 

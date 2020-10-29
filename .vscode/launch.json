@@ -8,6 +8,13 @@
             "type": "java",
             "name": "CodeLens (Launch) - App",
             "request": "launch",
+            "mainClass": "RBTree.App",
+            "projectName": "rbt"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
             "mainClass": "org.codenovice.App",
             "projectName": "treeDemo"
         },
