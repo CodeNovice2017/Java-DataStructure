@@ -67,7 +67,7 @@ public class BST<E> extends BinaryTree<E> {
 	public void remove(E element) {
 		remove(node(element));
 	}
-	protected void afterRemove(Node<E> node){};
+	protected void afterRemove(Node<E> node, Node<E> replacement){};
 
 	public boolean contains(E element) {
 		return node(element) != null;
@@ -109,12 +109,12 @@ public class BST<E> extends BinaryTree<E> {
 
 			// 等到节点真的被删除后,并且其left,right,parent等都处理好了之后,就是完全删除维护逻辑完成后再进行失衡调整
 			// 删除节点之后的处理
-			afterRemove(node);
+			afterRemove(node,replacement);
 		} else if (node.parent == null) { // node是叶子节点并且是根节点
 			root = null;
 
 			// 删除节点之后的处理
-			afterRemove(node);
+			afterRemove(node,null);
 		} else { // node是叶子节点，但不是根节点
 			if (node == node.parent.left) {
 				node.parent.left = null;
@@ -125,7 +125,7 @@ public class BST<E> extends BinaryTree<E> {
 			// AVL树其实上面的两行afterRemove其实可以不用写,都统一在最后这里处理即可,但是如果想让这个BST二叉搜索树兼容后面的红黑树的话
 			// 最好是这三个位置都写上,因为将来可能会传更多的参数
 			// 删除节点之后的处理
-			afterRemove(node);
+			afterRemove(node,null);
 		}
 	}
 	

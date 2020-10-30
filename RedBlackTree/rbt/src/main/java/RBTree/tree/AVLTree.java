@@ -120,7 +120,7 @@ public class AVLTree<E> extends BBST<E> {
   // 因为就是只需要向上层找到第一个失衡的节点调整平衡即可,但是remove引起的失衡要一直向上调整,判断所有的祖父节点
   // 所以只比afterAdd少一个break
   @Override
-  protected void afterRemove(Node<E> node) {
+  protected void afterRemove(Node<E> node, Node<E> replacement) {
     while ((node = node.parent) != null) {
       if (isBalanced(node)) {
         // 更新高度
