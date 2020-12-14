@@ -2,6 +2,8 @@ package sort;
 
 import java.util.Arrays;
 
+import sort.Example.SmallSum;
+
 /**
  * Hello world!
  */
@@ -25,7 +27,9 @@ public final class App {
 
         // getMaxTest();
         
-        mergeSortTest();
+        // mergeSortTest();
+
+        smallSumByMergeSort();
         
     }
 
@@ -66,5 +70,14 @@ public final class App {
         MergeSort.mergeSort(arr);
 
         Arrays.stream(arr).forEach(System.out::println);
+    }
+
+    static void smallSumByMergeSort(){
+
+        int arr[] = {4,1,3,5,0,6};
+
+        int result = SmallSum.smallSumByMergeSort(arr);
+
+        System.out.println(result);
     }
 }
