@@ -29,7 +29,9 @@ public final class App {
         
         // mergeSortTest();
 
-        smallSumByMergeSort();
+        // smallSumByMergeSort();
+
+        quickSortPartitionFunctionTest();
         
     }
 
@@ -79,5 +81,14 @@ public final class App {
         int result = SmallSum.smallSumByMergeSort(arr);
 
         System.out.println(result);
+    }
+
+    static void quickSortPartitionFunctionTest() {
+
+        int arr[] = { 4, 1, 3, 5, 0, 4 };
+
+        QuickSort.partition(arr, 0, arr.length-1);
+
+        Arrays.stream(arr).forEach(System.out::println);
     }
 }
