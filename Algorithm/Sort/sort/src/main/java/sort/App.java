@@ -31,7 +31,11 @@ public final class App {
 
         // smallSumByMergeSort();
 
-        quickSortPartitionFunctionTest();
+        // quickSortPartitionFunctionTest();
+
+        // quickSortTest();
+
+        heapSortTest();
         
     }
 
@@ -91,4 +95,24 @@ public final class App {
 
         Arrays.stream(arr).forEach(System.out::println);
     }
+
+    static void quickSortTest() {
+
+        int arr[] = { 4, 1, 3, 5, 0, 4 };
+
+        QuickSort.quickSort(arr, 0, arr.length-1);
+
+        Arrays.stream(arr).forEach(System.out::println);
+    }
+
+    static void heapSortTest() {
+
+        int arr[] = { 4, 1, 3, 5, 0, 4 };
+
+        HeapSort.heapSort(arr);
+
+        Arrays.stream(arr).forEach(System.out::println);
+    }
+
+
 }
