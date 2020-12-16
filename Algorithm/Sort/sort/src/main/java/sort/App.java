@@ -2,6 +2,7 @@ package sort;
 
 import java.util.Arrays;
 
+import sort.Example.MaxGap;
 import sort.Example.SmallSum;
 
 /**
@@ -35,7 +36,9 @@ public final class App {
 
         // quickSortTest();
 
-        heapSortTest();
+        // heapSortTest();
+
+        maxGapTest();
         
     }
 
@@ -112,6 +115,16 @@ public final class App {
         HeapSort.heapSort(arr);
 
         Arrays.stream(arr).forEach(System.out::println);
+    }
+
+    static void maxGapTest() {
+
+        int arr[] = { 4, 1, 3, 5, 0, 4 };
+
+        int result = MaxGap.getMaxGap(arr);
+
+        System.out.println(result);
+
     }
 
 
