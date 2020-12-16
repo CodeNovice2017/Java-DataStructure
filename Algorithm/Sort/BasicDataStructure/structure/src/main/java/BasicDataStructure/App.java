@@ -6,6 +6,7 @@ import BasicDataStructure.CatAndDogQueue.CatDogQueue;
  * Hello world!
  */
 public final class App {
+    
     private App() {
     }
 
@@ -20,9 +21,9 @@ public final class App {
 
         // designQueueByStackTest();
 
-        catAndDogQueueTest();
+        // catAndDogQueueTest();
 
-
+        randomPoolTest();
 
     }
 
@@ -78,5 +79,19 @@ public final class App {
             catDogQueue.pollDog();
         }
         System.out.println(catDogQueue.isDogEmpty());
+    }
+
+    static void randomPoolTest(){
+        RandomPool randomPool = new RandomPool();
+        char temp = 'a';
+        while(temp <= 'z'){
+            randomPool.insert(String.valueOf(temp));
+            temp++;
+        }
+        for (int i = 0; i < 10; i++) {
+            String tempString = randomPool.getRandom();
+            System.out.println(tempString);
+        }
+        randomPool.delete("c");
     }
 }
