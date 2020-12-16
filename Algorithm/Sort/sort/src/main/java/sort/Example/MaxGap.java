@@ -19,9 +19,6 @@ public class MaxGap {
             return 0;
         }
 
-
-        int range = (maxValue-minValue)/(arr.length+1);
-
         // 我原本想用一个二维数组来存储每个桶的信息
         // int[][] bucket = new int[3][length];
 
