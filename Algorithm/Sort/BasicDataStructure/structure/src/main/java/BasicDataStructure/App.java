@@ -23,7 +23,12 @@ public final class App {
 
         // catAndDogQueueTest();
 
-        randomPoolTest();
+        // randomPoolTest();
+
+        // circlePrintMatrixTest();
+
+        zhiZiPrintMatrixTest();
+
 
     }
 
@@ -93,5 +98,15 @@ public final class App {
             System.out.println(tempString);
         }
         randomPool.delete("c");
+    }
+
+    static void circlePrintMatrixTest(){
+        int[][] matrix = new int[][]{{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+        CirclePrintMatrix.spiralOrder(matrix);
+    }
+    
+    static void zhiZiPrintMatrixTest() {
+        int[][] matrix = new int[][] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+        ZhiZiPrintMatrix.zhiZiPrintMatrixFunction(matrix);
     }
 }
