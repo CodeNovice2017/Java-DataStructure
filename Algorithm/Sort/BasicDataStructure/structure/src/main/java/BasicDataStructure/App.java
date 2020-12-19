@@ -1,6 +1,7 @@
 package BasicDataStructure;
 
 import BasicDataStructure.CatAndDogQueue.CatDogQueue;
+import BasicDataStructure.DetermineALinkedListIsPalindromeStructure.ListNode;
 
 /**
  * Hello world!
@@ -27,8 +28,11 @@ public final class App {
 
         // circlePrintMatrixTest();
 
-        zhiZiPrintMatrixTest();
+        // zhiZiPrintMatrixTest();
 
+        // sortedRowAndColMatrixFindValueTest();
+
+        determineALinkedListIsPalindromeStructureTest();
 
     }
 
@@ -108,5 +112,41 @@ public final class App {
     static void zhiZiPrintMatrixTest() {
         int[][] matrix = new int[][] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
         ZhiZiPrintMatrix.zhiZiPrintMatrixFunction(matrix);
+    }
+
+    static void sortedRowAndColMatrixFindValueTest() {
+        int[][] matrix = new int[][] { { 0,1,2,5 }, { 2,3,4,7 }, { 4,4,4,8 }, { 5,7,7,9 } };
+        boolean result = SortedRowAndColMatrixFindValue.hasValue(matrix, 0);
+        System.out.println(result);
+    }
+    static void determineALinkedListIsPalindromeStructureTest(){
+
+        // 奇数个节点测试
+        // ListNode node1 = new ListNode(1);
+        // ListNode node2 = new ListNode(2);
+        // ListNode node3 = new ListNode(3);
+        // ListNode node4 = new ListNode(2);
+        // ListNode node5 = new ListNode(1);
+        // node1.next = node2;
+        // node2.next = node3;
+        // node3.next = node4;
+        // node4.next = node5;
+        // node5.next = null;
+
+        // 偶数个节点测试
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(3);
+        ListNode node5 = new ListNode(2);
+        ListNode node6 = new ListNode(1);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node5.next = node6;
+        node6.next = null;
+        boolean result = DetermineALinkedListIsPalindromeStructure.determineALinkedListIsPalindromeStructureFunction(node1);
+        System.out.println(result);
     }
 }
