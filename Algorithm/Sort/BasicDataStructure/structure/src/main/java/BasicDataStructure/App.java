@@ -32,7 +32,13 @@ public final class App {
 
         // sortedRowAndColMatrixFindValueTest();
 
-        determineALinkedListIsPalindromeStructureTest();
+        // determineALinkedListIsPalindromeStructureTest();
+
+        // linkedListPartitionTest();
+
+        // linkedListWithRandomPointerCloneTest();
+
+        twoLinkedListIntersectionTest();
 
     }
 
@@ -147,6 +153,61 @@ public final class App {
         node5.next = node6;
         node6.next = null;
         boolean result = DetermineALinkedListIsPalindromeStructure.determineALinkedListIsPalindromeStructureFunction(node1);
+        System.out.println(result);
+    }
+    static void linkedListPartitionTest(){
+
+        LinkedListPartition.ListNode node1 = new LinkedListPartition.ListNode(7);
+        LinkedListPartition.ListNode node2 = new LinkedListPartition.ListNode(3);
+        LinkedListPartition.ListNode node3 = new LinkedListPartition.ListNode(4);
+        LinkedListPartition.ListNode node4 = new LinkedListPartition.ListNode(6);
+        LinkedListPartition.ListNode node5 = new LinkedListPartition.ListNode(0);
+        LinkedListPartition.ListNode node6 = new LinkedListPartition.ListNode(4);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node5.next = node6;
+        node6.next = null;
+
+        LinkedListPartition.ListNode head = LinkedListPartition.partition(node1, 4);
+
+        System.out.println(head);
+    }
+    static void linkedListWithRandomPointerCloneTest(){
+
+        LinkedListWithRandomPointerClone.Node node1 = new LinkedListWithRandomPointerClone.Node(1);
+        LinkedListWithRandomPointerClone.Node node2 = new LinkedListWithRandomPointerClone.Node(2);
+        LinkedListWithRandomPointerClone.Node node3 = new LinkedListWithRandomPointerClone.Node(3);
+        LinkedListWithRandomPointerClone.Node node4 = new LinkedListWithRandomPointerClone.Node(4);
+        LinkedListWithRandomPointerClone.Node node5 = new LinkedListWithRandomPointerClone.Node(5);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node5.next = null;
+
+        node1.rand = node5;
+        node2.rand = node4;
+
+        LinkedListWithRandomPointerClone.Node newHead = LinkedListWithRandomPointerClone.linkedListWithRandomPointerClone(node1);
+        System.out.println(newHead);
+    }
+
+    static void twoLinkedListIntersectionTest(){
+
+        TwoLinkedListIntersection.ListNode node1 = new TwoLinkedListIntersection.ListNode(1);
+        TwoLinkedListIntersection.ListNode node2 = new TwoLinkedListIntersection.ListNode(2);
+        TwoLinkedListIntersection.ListNode node3 = new TwoLinkedListIntersection.ListNode(3);
+        TwoLinkedListIntersection.ListNode node4 = new TwoLinkedListIntersection.ListNode(4);
+        TwoLinkedListIntersection.ListNode node5 = new TwoLinkedListIntersection.ListNode(5);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node5.next = node1;
+
+        TwoLinkedListIntersection.ListNode result = TwoLinkedListIntersection.judgeWhetherLinkedListHasLoop(node1);
         System.out.println(result);
     }
 }
