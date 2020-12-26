@@ -31,6 +31,7 @@ public class DetermineALinkedListIsPalindromeStructure {
                 break;
             }
         }
+
         boolean result = true;
         ListNode reverseListHeadNode = reverseLinkedList(slowPointer);
         ListNode reverseListHeadNodeTemp = reverseListHeadNode;
