@@ -42,7 +42,13 @@ public final class App {
 
         // medianHolderStructureDesignTest();
 
-        leastCostGoldChainTest();
+        // leastCostGoldChainTest();
+
+        // origamiProblemTest();
+
+        // findSuccessorNodeTest();
+        
+        findLocalMinimumIndexTest();
     }
 
     static void medianHolderStructureDesignTest(){
@@ -63,5 +69,29 @@ public final class App {
         System.out.println(LeastCostGoldChain.getLeastCost(arr));
     }
 
+    static void origamiProblemTest(){
+        OrigamiProblem.printAllFolds(3);
+    }
+
+    static void findSuccessorNodeTest(){
+        FindSuccessorNode findSuccessorNode = new FindSuccessorNode();
+        FindSuccessorNode.Node node1 = findSuccessorNode.new Node(2);
+        FindSuccessorNode.Node node2 = findSuccessorNode.new Node(1);
+        FindSuccessorNode.Node node3 = findSuccessorNode.new Node(3);
+    
+        node1.parent = null;
+        node1.left = node2;
+        node1.right = node3;
+
+        node2.parent = node1;
+        node3.parent = node2;
+
+        System.out.println(FindSuccessorNode.findSuccessorNode(node3));
+    }
+
+    static void findLocalMinimumIndexTest(){
+        int[] arr = {4,3,5,4,5,6,3,4,7};
+        System.out.println(FindLocalMinimumIndex.findLocalMinimumIndexFunction(arr)); 
+    }
 }
 
