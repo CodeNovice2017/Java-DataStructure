@@ -1,4 +1,4 @@
-package basic_class_05;
+package Graph;
 
 import java.util.ArrayList;
 
