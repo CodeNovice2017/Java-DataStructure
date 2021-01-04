@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Launch App",
             "request": "launch",
+            "mainClass": "Graph.App",
+            "projectName": "Graph"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
             "mainClass": "BinaryTree.App",
             "projectName": "BinaryTree"
         },

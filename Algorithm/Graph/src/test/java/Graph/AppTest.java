@@ -1,4 +1,4 @@
-package org.codechase;
+package Graph;
 
 import org.junit.jupiter.api.Test;
 

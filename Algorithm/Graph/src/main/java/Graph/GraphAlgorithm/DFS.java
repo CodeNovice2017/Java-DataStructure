@@ -1,7 +1,9 @@
-package Graph;
+package Graph.GraphAlgorithm;
 
 import java.util.HashSet;
 import java.util.Stack;
+
+import Graph.Node;
 
 // 图的深度优先遍历
 // 就是对任何一个节点来说,下面任何一条路可达的所有节点走完才会回到父节点,去走父节点的其他路

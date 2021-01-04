@@ -1,8 +1,10 @@
-package Graph;
+package Graph.GraphAlgorithm;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import Graph.Node;
 
 // 图的宽度有限遍历
 public class BFS { 
