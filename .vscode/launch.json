@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Launch App",
             "request": "launch",
+            "mainClass": "ViolenceRecursionAndDynamicProgramming.App",
+            "projectName": "ViolenceRecursionAndDynamicProgramming"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
             "mainClass": "Graph.App",
             "projectName": "Graph"
         },
