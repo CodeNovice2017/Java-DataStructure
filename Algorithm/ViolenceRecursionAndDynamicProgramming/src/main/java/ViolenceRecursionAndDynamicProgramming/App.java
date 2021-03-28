@@ -14,7 +14,9 @@ public final class App {
     public static void main(String[] args) {
         System.out.println("Hello World!");
 
-        testgetShortestPath();
+        // testgetShortestPath();
+
+        testfindSolutionForAim();
     }
 
     static void testgetShortestPath(){
@@ -25,5 +27,10 @@ public final class App {
         System.out.println(shortestPath.getShortestPath(matrix));
 
         System.out.println(shortestPath.getShortestPathByDynamicProgramming(matrix));
+    }
+
+    static void testfindSolutionForAim(){
+        int[] arr = new int[]{1,2,3,4,5,6};
+        System.out.println(FindSolutionForAim.findSolutionForAim(arr, 16)); 
     }
 }

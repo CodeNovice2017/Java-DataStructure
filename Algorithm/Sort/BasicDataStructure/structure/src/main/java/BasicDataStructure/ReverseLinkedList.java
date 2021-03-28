@@ -45,4 +45,23 @@ public class ReverseLinkedList {
         }
         return preNodePointer;
     }
+
+    public static ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode preNode = head;
+        ListNode node = head.next;
+        ListNode nextNode = node.next;
+        head.next = null;
+        while (nextNode != null) {
+            node.next = preNode;
+            node = nextNode;
+            preNode = node;
+            nextNode = nextNode.next;
+        }
+        node.next = preNode;
+        return node;
+    }
 }

@@ -38,7 +38,9 @@ public final class App {
 
         // linkedListWithRandomPointerCloneTest();
 
-        twoLinkedListIntersectionTest();
+        // twoLinkedListIntersectionTest();
+
+        testReverseList();
 
     }
 
@@ -209,5 +211,22 @@ public final class App {
 
         TwoLinkedListIntersection.ListNode result = TwoLinkedListIntersection.judgeWhetherLinkedListHasLoop(node1);
         System.out.println(result);
+    }
+
+    static void testReverseList(){
+
+        ReverseLinkedList.ListNode node1 = new ReverseLinkedList.ListNode(1);
+        ReverseLinkedList.ListNode node2 = new ReverseLinkedList.ListNode(2);
+        ReverseLinkedList.ListNode node3 = new ReverseLinkedList.ListNode(3);
+        ReverseLinkedList.ListNode node4 = new ReverseLinkedList.ListNode(4);
+        ReverseLinkedList.ListNode node5 = new ReverseLinkedList.ListNode(5);
+        
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node5.next = null;
+
+        ReverseLinkedList.reverseList(node1);
     }
 }

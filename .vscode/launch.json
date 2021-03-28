@@ -8,6 +8,27 @@
             "type": "java",
             "name": "Launch App",
             "request": "launch",
+            "mainClass": "OJ.App",
+            "projectName": "OJ"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "List.App",
+            "projectName": "List"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "DynamicProgramming.App",
+            "projectName": "DynamicProgramming"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
             "mainClass": "ViolenceRecursionAndDynamicProgramming.App",
             "projectName": "ViolenceRecursionAndDynamicProgramming"
         },
