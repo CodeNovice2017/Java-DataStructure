@@ -1,15 +1,12 @@
 package OJ;
-import java.io.*;
-import java.util.*;
-import java.math.*;
+
+import OJ.problems.NQueens20210704;
 
 public class App {
 
-    public static int minStep = Integer.MAX_VALUE;
-
     public static void main(String[] args) {
-        Scanner sc = new Scanner(new BufferedInputStream(System.in));
-        int n = sc.nextInt();
-        System.out.println(1);
+        // N皇后测试
+        NQueens20210704 nQueens20210704 = new NQueens20210704();
+        nQueens20210704.solveNQueens(4);
     }
 }
