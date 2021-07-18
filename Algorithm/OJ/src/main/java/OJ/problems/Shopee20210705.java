@@ -43,6 +43,16 @@ public class Shopee20210705 {
         return result;
     }
 
+    // ShopeeTest
+    //int[][] rooms = new int[3][3];
+    //rooms[0] = new int[]{-2, -3, 3};
+    //rooms[1] = new int[]{-5, -10, 1};
+    //rooms[2] = new int[]{10, 30, -5};
+    //int[] startPoint = new int[]{0, 0};
+    //int[] endPoint = new int[]{2, 2};
+    //Shopee20210705 shopee20210705 = new Shopee20210705();
+    //System.out.println(shopee20210705.minimumInitHealth(rooms, startPoint, endPoint));
+
     private static int resultNeedHealth = Integer.MIN_VALUE;
 
     public static int minimumInitHealth(int[][] rooms, int[] startPoint, int[] endPoint) {
