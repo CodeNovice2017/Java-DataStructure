@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Created on 2021-08-22
  */
 public class ByteDance20210822_4 {
-    public static void main(String[] args) {
+    public static void func(String[] args) {
         Scanner sc = new Scanner(new BufferedInputStream(System.in));
         int t = sc.nextInt();
         sc.nextLine();
